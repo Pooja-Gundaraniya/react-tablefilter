@@ -56,15 +56,18 @@ const UserData = () => {
   const [filter, setFilter] = useState(['all']);
   const [filterData, setFilterData] = useState(rows);
 
-  
+  useEffect(() => {
+    // getFilterData()
+  }, [filter])
+
   const handleChange = (event: any) => {
     setFilter(event.target.value);
-    getData()
   };
-  
+
   const getConditions = () => {
     const conditions: any = {}
     filter.forEach((item) => {
+
       if (item === "active") {
         conditions.checkActive = true
       }
@@ -83,60 +86,120 @@ const UserData = () => {
     })
     return conditions;
   }
-  const conditions = getConditions();
-  
-  // console.log(conditions)
-  
-  const active = rows.filter(item=>item.status==='active')
-  console.log(" active", active)
-  const cancel = rows.filter(item=>item.status==='cancel')
-  console.log(" cancel", cancel)
-  const belowActive = active.filter(item=>item.age<18)
-  console.log(" belowActive", belowActive)
-  const aboveActive = active.filter(item=>item.age>18)
-  console.log(" aboveActive", aboveActive)
-  const belowCancel = cancel.filter(item=>item.age<18)
-  console.log(" belowCancel", belowCancel)
-  const aboveCancel = cancel.filter(item=>item.age>18)
-  console.log(" aboveCancel", aboveCancel)
-  
-const getData= () =>{
-if (conditions.checkall){
-  setFilterData(rows)
-}
-if (conditions.checkActive){
-  setFilterData(active)
-}
-if (conditions.checkCancel){
-  setFilterData(cancel)
-}
-if (conditions.checkActive && conditions.checkaboveEighteen){
-  setFilterData(aboveActive)
-}
-if (conditions.checkActive && conditions.checkBelowEighteen){
-  setFilterData(belowActive)
-}
-if (conditions.checkCancel && conditions.checkaboveEighteen){
-  setFilterData(aboveCancel)
-}
-if(conditions.checkCancel && conditions.checkBelowEighteen){
-  setFilterData(belowCancel)
-}
-}
 
-console.log(filterData,'ilwelhgileegheiwlg')
+  // const getFilterData = () => {
+  //   const conditions = getConditions();
+  //   let data: any[] = []
+  //     rows.forEach((item: any) => {
+  //       let ableTocheckMore: any;
+  //       if (conditions.checkall) {
+  //         if (item) ableTocheckMore = item
+  //       }
+  //       if (conditions.checkActive) {
+  //         if (ableTocheckMore) {
+  //           if (ableTocheckMore.status === "active") ableTocheckMore = item
+  //         } else {
+  //           if (item.status === "active") ableTocheckMore = item
+  //         }
+  //       }
+  //       if (conditions.checkCancel) {
+  //         if (ableTocheckMore) {
+  //           if (ableTocheckMore.status === "cancel") ableTocheckMore = item
+  //         } else {
+  //           if (item.status === "cancel") ableTocheckMore = item
+  //         }
+  //       }
+  //       // if (conditions.checkBelowEighteen) {
+  //       //   debugger
+  //       //   if (ableTocheckMore) {
+  //       //     if (ableTocheckMore.age < 18) ableTocheckMore = item
+  //       //   } else {
+  //       //     if (item.age<18) ableTocheckMore = item
+  //       //   }
+  //       // }
+  //       // if (conditions.checkaboveEighteen) {
+  //       //   if (ableTocheckMore) {
+  //       //     if (ableTocheckMore.age >18) ableTocheckMore = item
+  //       //   } else {
+  //       //     if (item.age >18) ableTocheckMore = item
+  //       //   }
+  //       // }
+  //       if (ableTocheckMore) return data.push(ableTocheckMore);
+  //     })
+  //    setFilterData(data)
+  // }
 
-  useEffect(() => {
 
-// getData()
+  // const getFilterDataAgain = () => {    
+    
+  //   const conditions = getConditions();
+  //   let data: any[] = []
+  //   if(conditions.checkActive){
+  //     const a= rows.filter((item)=>{item.status==='active' })
 
-  }, [filter])
-  
-  // const activeData = conditions.checkActive ? active : cancel;
+  //     if (conditions.checkBelowEighteen) {
+  //     const b= rows.filter((item)=>{item.age>18 })
+  //       console.log(b,'a');
+        
+  //       data.push(a)
+  //     }
+  //     if (conditions.checkaboveEighteen) {
+  //       const a= rows.filter((item)=>{item.status==='active' && item.age<18 })
+  //       console.log(a,'a');
+  //       data.push(a)
+  //     }
+  //   }
+  //   else (conditions.checkall) 
+  //   {  const a=filterData
+  //     data.push(a)
+    
+  //   }
+  //   setFilterDataAgain(data)
+  //   // filterData.forEach((item: any) => {
+  //   //     let ableTocheckMore: any;
+  //   //     if (conditions.checkall) {
+  //   //       if (item) ableTocheckMore = item
+  //   //     }
+  //   //     if (conditions.checkBelowEighteen) {
+  //   //       debugger
+  //   //       if (ableTocheckMore) {
+  //   //         if (ableTocheckMore.age < 18) ableTocheckMore = item
+  //   //       } else {
+  //   //         if (item.age<18) ableTocheckMore = item
+  //   //       }
+  //   //     }
+  //   //     if (conditions.checkaboveEighteen) {
+  //   //       if (ableTocheckMore) {
+  //   //         if (ableTocheckMore.age >18) ableTocheckMore = item
+  //   //       } else {
+  //   //         if (item.age >18) ableTocheckMore = item
+  //   //       }
+  //   //     }
+  //   //     if (ableTocheckMore) return data.push(ableTocheckMore);
+  //   //   })
+  // }
 
-// const ActiveBelow = conditions.checkActive && conditions.checkaboveEighteen ? aboveActive : belowActive;
 
-// const cancelBelow = conditions.checkCancel && conditions.checkaboveEighteen ? aboveCancel : belowCancel
+// console.log(filterDataAgain,'filterDataAgain');
+
+const conditions = getConditions();
+
+console.log(conditions)
+
+const active = rows.filter(item=>item.status==='active')
+const cancel = rows.filter(item=>item.status==='cancel')
+const belowActive = active.filter(item=>item.age>18)
+const aboveActive = active.filter(item=>item.age>18)
+const belowCancel = cancel.filter(item=>item.age>18)
+const aboveCancel = cancel.filter(item=>item.age<18)
+
+console.log(aboveActive)
+
+const activeData = conditions.checkActive ? active : cancel;
+
+const ActiveBelow = conditions.checkActive && conditions.checkaboveEighteen ? aboveActive : belowActive;
+
+const cancelBelow = conditions.checkCancel && conditions.checkaboveEighteen ? aboveCancel : belowCancel
 
 
 
